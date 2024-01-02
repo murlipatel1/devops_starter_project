@@ -111,6 +111,15 @@ pipeline {
     http://localhost:9090
     ```
 
+# Terraform file structure explanation
+
+1. main.tf: 
+This file is the main configuration file for your Terraform project. It defines the infrastructure resources you want to create, such as virtual machines, networks, or storage. It specifies the desired state of your infrastructure.
+
+2. variables.tf: This file is used to declare input variables for your Terraform project. Input variables allow you to parameterize your infrastructure configuration, making it more flexible and reusable. They can be used to customize the behavior of your infrastructure resources.
+
+3. output.tf: This file is used to define the output values that you want to extract from your Terraform configuration. Outputs can be used to retrieve information about the resources created by Terraform, such as IP addresses or resource IDs. They are useful for sharing information between different parts of your infrastructure or with other systems.
+
 
 ## Contributing
 
