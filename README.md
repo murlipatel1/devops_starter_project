@@ -9,6 +9,8 @@ Before getting started, make sure you have the following installed:
 - Node.js
 - Docker
 - Kubernetes
+-Jenkins
+- Prometheus
 
 ## Getting Started
 
@@ -39,6 +41,38 @@ Before getting started, make sure you have the following installed:
 
 5. Access the application in your browser at `http://localhost:3000`.
 
+## Jenkinsfile to run a Node.js app using Kubernetes alternative for running locally and creating pipeline
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                // Checkout code from version control system
+                checkout scm
+                
+                // Install dependencies
+                sh 'npm install'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Run tests
+                sh 'npm test'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Deploy to Kubernetes cluster
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
+    }
+}
+
 ## Deploying in Kubernetes
 
 1. Create a Kubernetes deployment:
@@ -54,6 +88,28 @@ Before getting started, make sure you have the following installed:
     ```
 
 3. Access the application in your browser using the exposed service.
+
+
+4. Configure Prometheus to scrape metrics from the application:
+
+    ```yaml
+    scrape_configs:
+      - job_name: 'your-job-name'
+         static_configs:
+            - targets: ['your-service-name:8080']
+    ```
+
+5. Start Prometheus:
+
+    ```bash
+    prometheus --config.file=prometheus.yml
+    ```
+
+6. Access the Prometheus UI and view the metrics:
+
+    ```bash
+    http://localhost:9090
+    ```
 
 
 ## Contributing
